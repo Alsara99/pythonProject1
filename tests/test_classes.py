@@ -37,4 +37,17 @@ def test_category_count(category):
 
 
 def test_product_count(category):
-    assert len(category.products) == 3
+    assert category.product_count == 3
+
+
+def test_new_product(samsung_product):
+    new_product = Product.new_product({"name": "Samsung Galaxy S23 Ultra",
+    "description": "256GB, Серый цвет, 200MP камера", "price": 180000.0,"quantity": 5})
+    assert type(new_product) == type(samsung_product)
+
+
+def test_add_product(category):
+    product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
+    category.add_product = product4
+    assert category.category_count == 4
+    assert category.product_count == 4
