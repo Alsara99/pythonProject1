@@ -17,6 +17,20 @@ def test_init(samsung_product):
     assert samsung_product.quantity == 5
 
 
+def test_price(samsung_product):
+    new_value = 16000
+    samsung_product.price = new_value
+    assert samsung_product.price == new_value
+
+
+def test_price_exception(samsung_product):
+    try:
+        new_value = 0
+        samsung_product.price = new_value
+    except ValueError as error:
+        assert str(error) == "Ошибка"
+
+
 @pytest.fixture
 def category():
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
