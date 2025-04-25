@@ -17,11 +17,11 @@ class Product:
             self.__price = new_value
         else:
             print("Цена не должна быть нулевая или отрицательная")
-            raise ValueError("Ошибка")
 
 
     @classmethod
     def new_product(cls, dictionary):
+
         name, description, price, quantity = dictionary.values()
         return cls(name, description, price, quantity)
 
@@ -47,5 +47,6 @@ class Category:
 
     @products.setter
     def add_product(self, product):
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
