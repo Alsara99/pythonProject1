@@ -10,6 +10,14 @@ def samsung_product():
                    5)
 
 
+@pytest.fixture
+def samsung_product1():
+    return Product("Samsung Galaxy S24 Ultra",
+                   "256GB, Серый цвет, 200MP камера",
+                   250000.0,
+                   7)
+
+
 def test_init(samsung_product):
     assert samsung_product.name == 'Samsung Galaxy S23 Ultra'
     assert samsung_product.description == '256GB, Серый цвет, 200MP камера'
@@ -29,6 +37,14 @@ def test_price_exception(samsung_product):
         samsung_product.price = new_value
     except ValueError as error:
         assert str(error) == "Ошибка"
+
+
+def test_str_output(samsung_product):
+    assert str(samsung_product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_add(samsung_product, samsung_product1):
+    assert samsung_product + samsung_product1
 
 
 @pytest.fixture
@@ -65,3 +81,7 @@ def test_add_product(category):
     category.add_product = product4
     assert category.category_count == 4
     assert category.product_count == 4
+
+
+def test_str_output(category):
+    assert str(category) == "Смартфоны, количество продуктов: 27 шт."
