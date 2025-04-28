@@ -11,7 +11,10 @@ class Product:
 
 
     def __add__(self, other):
-        return self.__price * self.quantity + other.__price * other.quantity
+        if isinstance(self, type(other)):
+            return self.__price * self.quantity + other.__price * other.quantity
+        else:
+            raise TypeError
 
 
     @property
@@ -32,6 +35,23 @@ class Product:
     def new_product(cls, dictionary):
         name, description, price, quantity = dictionary.values()
         return cls(name, description, price, quantity)
+
+
+class Smartphone(Product):
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
 
 
 class Category:
@@ -62,5 +82,8 @@ class Category:
 
     @products.setter
     def add_product(self, product):
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError
