@@ -1,3 +1,5 @@
+from logging import exception
+
 import pytest
 from src.classes import *
 
@@ -16,6 +18,15 @@ def samsung_product1():
                    "256GB, Серый цвет, 200MP камера",
                    250000.0,
                    7)
+
+
+@pytest.fixture
+def grass1():
+    return LawnGrass("Газонная трава",
+                 "Элитная трава для газона",
+                      500.0, 20,
+                    "Россия",
+            "7 дней", "Зеленый")
 
 
 def test_init(samsung_product):
@@ -83,5 +94,19 @@ def test_add_product(category):
     assert category.product_count == 4
 
 
-def test_str_output(category):
+def test_str(category):
     assert str(category) == "Смартфоны, количество продуктов: 27 шт."
+
+
+def test_sum_different_products(samsung_product, grass1):
+    try:
+        result = samsung_product + grass1
+    except Exception as e:
+        assert type(e) == type(TypeError())
+
+
+def test_add_none_product(category):
+    try:
+        category.add_product = "Not a product"
+    except Exception as e:
+        assert type(e) == type(TypeError())
