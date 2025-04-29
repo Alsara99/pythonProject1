@@ -1,3 +1,5 @@
+from logging import exception
+
 import pytest
 from src.classes import *
 
@@ -10,11 +12,50 @@ def samsung_product():
                    5)
 
 
+@pytest.fixture
+def samsung_product1():
+    return Product("Samsung Galaxy S24 Ultra",
+                   "256GB, Серый цвет, 200MP камера",
+                   250000.0,
+                   7)
+
+
+@pytest.fixture
+def grass1():
+    return LawnGrass("Газонная трава",
+                 "Элитная трава для газона",
+                      500.0, 20,
+                    "Россия",
+            "7 дней", "Зеленый")
+
+
 def test_init(samsung_product):
     assert samsung_product.name == 'Samsung Galaxy S23 Ultra'
     assert samsung_product.description == '256GB, Серый цвет, 200MP камера'
     assert samsung_product.price == 180000.0
     assert samsung_product.quantity == 5
+
+
+def test_price(samsung_product):
+    new_value = 16000
+    samsung_product.price = new_value
+    assert samsung_product.price == new_value
+
+
+def test_price_exception(samsung_product):
+    try:
+        new_value = 0
+        samsung_product.price = new_value
+    except ValueError as error:
+        assert str(error) == "Ошибка"
+
+
+def test_str_output(samsung_product):
+    assert str(samsung_product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_add(samsung_product, samsung_product1):
+    assert samsung_product + samsung_product1
 
 
 @pytest.fixture
@@ -51,3 +92,21 @@ def test_add_product(category):
     category.add_product = product4
     assert category.category_count == 4
     assert category.product_count == 4
+
+
+def test_str(category):
+    assert str(category) == "Смартфоны, количество продуктов: 27 шт."
+
+
+def test_sum_different_products(samsung_product, grass1):
+    try:
+        result = samsung_product + grass1
+    except Exception as e:
+        assert type(e) == type(TypeError())
+
+
+def test_add_none_product(category):
+    try:
+        category.add_product = "Not a product"
+    except Exception as e:
+        assert type(e) == type(TypeError())
