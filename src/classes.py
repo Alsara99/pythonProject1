@@ -1,9 +1,30 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class BaseProduct(ABC):
+    @abstractmethod
+    def __init__(self, name, description, price, quantity):
+        super().__init__()
+        pass
+
+
+class MixinLog:
+    def __init__(self, *args, **kwargs):
+        params = self.__dict__
+        print(f"Создан объект класса {self.__class__.__name__} с параметрами: {params}")
+
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({', '.join(repr(arg) for arg in self.__dict__.values())})"
+
+
+class Product(BaseProduct, MixinLog):
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__(name, description, price, quantity)
 
 
     def __str__(self):

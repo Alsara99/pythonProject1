@@ -100,7 +100,7 @@ def test_str(category):
 
 def test_sum_different_products(samsung_product, grass1):
     try:
-        result = samsung_product + grass1
+        samsung_product + grass1
     except Exception as e:
         assert type(e) == type(TypeError())
 
