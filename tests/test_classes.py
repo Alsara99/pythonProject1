@@ -110,3 +110,9 @@ def test_add_none_product(category):
         category.add_product = "Not a product"
     except Exception as e:
         assert type(e) == type(TypeError())
+
+
+def test_output(capsys):
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    captured = capsys.readouterr()
+    assert captured.out == "(Product, 'Samsung Galaxy S23 Ultra', '256GB, Серый цвет, 200MP камера', 180000.0, 5)\n"

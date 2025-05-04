@@ -10,12 +10,11 @@ class BaseProduct(ABC):
 
 class MixinLog:
     def __init__(self, *args, **kwargs):
-        params = self.__dict__
-        print(f"Создан объект класса {self.__class__.__name__} с параметрами: {params}")
+        print(f"({self.__class__.__name__}, {', '.join(repr(arg) for arg in self.__dict__.values())})")
 
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({', '.join(repr(arg) for arg in self.__dict__.values())})"
+        return f"({self.__class__.__name__}, {', '.join(repr(arg) for arg in self.__dict__.values())})"
 
 
 class Product(BaseProduct, MixinLog):
